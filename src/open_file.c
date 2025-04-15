@@ -255,8 +255,9 @@ int opencsv(char* f_name, folder_t* folder)
 /*--------------CORRECTING FOLDER NAMES, adding short names (standart-provider)-----------------*/
     for(u32 i = 0; i < folder_quantity; i++)
     {
-        strncpy(folder[i].name, folder[i].placemark_arr[0].name, 200);
-
+        strncpy(folder[i].name, folder[i].placemark_arr[0].name, 300);
+        strncpy(folder[i].short_name, folder[i].name, 300);
+#if 0
         //--reading the provider's name (located between consecutive characters '[' and '[') 
         //(The name of the standard is also written there, in this case it will be included in the shortname twice.)
         char* tmp_ptr[3];
@@ -286,7 +287,7 @@ int opencsv(char* f_name, folder_t* folder)
             subname[k] = tmp_ptr[0][k];
         }
         subname[max_k] = '\0';
-        //------------
+        //---------------------------------------------------------------------------------
         if(strstr(folder[i].name, "GPS") != NULL) 
         {
             strcpy(folder[i].short_name, "GPS");
@@ -306,6 +307,7 @@ int opencsv(char* f_name, folder_t* folder)
             strcpy(folder[i].short_name, "UMTS_");
             strcat(folder[i].short_name, subname);
         }
+            #endif
     }
 #endif
     fclose(file_stream);
