@@ -235,7 +235,7 @@ int main(void)
             savekml(file_name,folder, folder_quantity);
             savecsvcovchart(file_name, folder, folder_quantity);
             savecsvcovtab(file_name, folder, folder_quantity, settings);
-            savekml_test(file_name, folder, folder_quantity);
+            if(settings.covercalctype == total) savekml_test(file_name, folder, folder_quantity);
             printcoveragetable(folder, folder_quantity, settings);
             break;
         } 
@@ -252,7 +252,7 @@ int main(void)
             createcovtab(folder, folder_quantity, settings);
             savecsvcovchart(file_name, folder, folder_quantity);
             savecsvcovtab(file_name, folder, folder_quantity, settings);
-            savekml_test(file_name, folder, folder_quantity);
+            if(settings.covercalctype == total) savekml_test(file_name, folder, folder_quantity);
             printcoveragetable(folder, folder_quantity, settings);
             break;
         } 
