@@ -51,8 +51,8 @@ static const char instruction[5000] = "\n"
 "    UMTSlevel=-90.0           - пороговый уровень сигнала, dBm, для определения покрытия стандартом UMTS\n"
 "    LTElevel=-83.5            - пороговый уровень сигнала, dBm, для определения покрытия стандартом LTE\n"
 "    defaultlvl=-85.0          - пороговый уровень сигнала, dBm, для определения покрытия в случае, если утилита не смогла распознать стандарт связи (добавлен на всякий случай)\n"
-"    calctype=TOTAL            - тип формирования таблиц покрытия: \"SEPARATE\" - несколько таблиц, каждая одного стандарта связи одного оператора; \"TOTAL\" - одна общая таблица покрытия автодороги \n"
-"    avertype=MEDIAN           - тип расчета среднего уровня для формирования таблиц покрытия: \"SMA\" - простое среднее, \"MEDIAN\" - медианное среднее\n"
+"    calctype=TOT            - тип формирования таблиц покрытия: \"SEP\" - несколько таблиц, каждая одного стандарта связи одного оператора; \"TOT\" - одна общая таблица покрытия автодороги\n"
+"    avertype=MED           - тип расчета среднего уровня для формирования таблиц покрытия: \"SMA\" - простое среднее, \"MED\" - медианное среднее\n"
 "    averdepth=20              - количество точек для расчета среднего (от 2 до 100);\n"
 "    maxskipdistance=0.15      - параметр дополнительного уреднения результатов расчета по расстоянию, км, учитывается при формировании общей таблицы покрытия (когда calctype=TOTAL)\n"
 "    \n"
@@ -116,7 +116,7 @@ void printcoveragetable(folder_t* folder, int folder_quantity, init_t settings)
 init_t initialization(void)
 {
     static const char init_string[300] = "[OPTIONS]\nfilflag=1\nGSMlevel=-85.0\nUMTSlevel=-90.0\nLTElevel=-83.5\ndefaultlvl=-85.0\n"
-                               "calctype=TOTAL\navertype=MEDIAN\naverdepth=20\nmaxskipdistance=0.8\n";
+                               "calctype=TOT\navertype=MED\naverdepth=20\nmaxskipdistance=0.8\n";
     init_t settings;
     char str_1[100];
     char str_2[100];
@@ -162,11 +162,11 @@ init_t initialization(void)
         getchar();
         exit(1);
     }   
-    if(strstr(str_1, "TOTAL") != NULL) {
+    if((strstr(str_1, "TOT") != NULL) || (strstr(str_1, "TOTAL") != NULL) ) {
         settings.covercalctype = total;
     }
     else {
-        if(strstr(str_1, "SEPARATE") != NULL) {
+        if((strstr(str_1, "SEP") != NULL) || (strstr(str_1, "SEPARATE") != NULL)) {
             settings.covercalctype = separate;}
         else {
             printf("Ошибка чтения settings.ini,\n расчет зон покрытия по умолчанию - общий\n");
@@ -176,7 +176,7 @@ init_t initialization(void)
     if(strstr(str_2, "SMA") != NULL) {
         settings.avgtype = sma;}
     else {
-        if(strstr(str_2, "MEDIAN") != NULL) {
+        if((strstr(str_2, "MED") != NULL) || (strstr(str_2, "MEDIAN") != NULL)) {
             settings.avgtype = median;}
         else {
             printf("Ошибка чтения settings.ini,\n расчет среднего уровня по умолчанию - медиана\n");
