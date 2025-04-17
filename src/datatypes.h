@@ -14,7 +14,7 @@ typedef struct {
 } filedata_t;
 
 typedef struct {
-    char        name[300];
+    char        name[400];
     int         measnumber;
     int         timestamp;
     double      signallevel;
@@ -42,8 +42,8 @@ typedef struct {
     int           number;
     u32           startstr;
     u32           endstr;
-    char          name[300];
-    char          short_name[300];
+    char          name[400];
+    char          short_name[400];
     u32           placemark_quantity;
     u32           firstplacemark_startstr;
     u32*          placemark_startstr;

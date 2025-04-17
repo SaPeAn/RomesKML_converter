@@ -9,7 +9,7 @@ extern void clean_stdin(void);
 /*--------The function opens the kml file, copies it into an array of strings and parses it, forming the kml data structure.------*/
 int openkml(char* f_name, folder_t* folder)
 {
-    char file_name[200];
+    char file_name[400];
     strcpy(file_name, f_name);
     strcat(file_name, ".kml");
     FILE* file_stream = fopen(file_name, "r");
@@ -86,12 +86,12 @@ int openkml(char* f_name, folder_t* folder)
 
 int opencsv(char* f_name, folder_t* folder)
 {
-    char file_name[200];
+    char file_name[400];
     strcpy(file_name, f_name);
     char path[400];
     strcpy(path, "./Output_CSV_files/");
     strcat(file_name, ".csv");
-    strncat(path, file_name, 200);
+    strncat(path, file_name, 400);
 
     FILE* file_stream = fopen(path, "r");
     if(file_stream == NULL)
@@ -257,6 +257,23 @@ int opencsv(char* f_name, folder_t* folder)
     {
         strncpy(folder[i].name, folder[i].placemark_arr[0].name, 300);
         strncpy(folder[i].short_name, folder[i].name, 300);
+
+        char tmp_char[10] = {'\\','/',':','*','?','\"','<','>','|'}; //exclude forbidden characters for file names in Windows
+        u32 p = 0;
+        while(folder[i].short_name[p] != '\0')
+        {
+            for(u32 q = 0; q < 9; q++)
+            {
+                if(folder[i].short_name[p] == tmp_char[q]) 
+                {
+                    folder[i].short_name[p] = '_';
+                }
+            }
+            p++;
+        }
+        
+
+        
 #if 0
         //--reading the provider's name (located between consecutive characters '[' and '[') 
         //(The name of the standard is also written there, in this case it will be included in the shortname twice.)

@@ -61,12 +61,12 @@ extern void clean_stdin(void);
 void savecsv(char* f_name, folder_t* folder, int folder_quantity, int fillinflag)
 {    
     printf("\nSaving csv-file..");
-    char file_name[200];
+    char file_name[400];
     strcpy(file_name, f_name);
     char path[400];
     strcpy(path, "./Output_CSV_files/");
     strcat(file_name, ".csv");
-    strncat(path, file_name, 200);
+    strncat(path, file_name, 400);
     FILE* csv_file = fopen(path, "w");
     if(csv_file == NULL)
     {
@@ -143,8 +143,8 @@ void savecsv(char* f_name, folder_t* folder, int folder_quantity, int fillinflag
 void savekml(char* f_name, folder_t* folder, int folder_quantity)
 {
     printf("\nSaving kml-file(s)\n");
-    char file_name[200];
-    char subname[200];
+    char file_name[400];
+    char subname[400];
     char path[400];
 
     for(u32 i = 0; i < folder_quantity; i++)
@@ -152,12 +152,12 @@ void savekml(char* f_name, folder_t* folder, int folder_quantity)
         if(strstr(folder[i].name, "GPS Data") != NULL) continue;
 
         strcpy(path, "./Output_KML_files/");
-        strncpy(file_name, f_name, 200);
-        strncat(path, file_name, 200);
+        strncpy(file_name, f_name, 400);
+        strncat(path, file_name, 400);
         strcat(path, "_");
         strcpy(subname, folder[i].short_name);
         strcat(subname, ".kml");
-        strncat(path, subname, 200);
+        strncat(path, subname, 400);
 
         FILE* kml_file = fopen(path, "w");
         if(kml_file == NULL)
@@ -191,13 +191,13 @@ void savekml(char* f_name, folder_t* folder, int folder_quantity)
 void savekml_test(char* f_name, folder_t* folder, int folder_quantity)
 {
     printf("\nSaving raw coverage kml-file\n");
-    char file_name[200];
-    char subname[200];
+    char file_name[400];
+    char subname[400];
     char path[400];
 
     strcpy(path, "./Output_KML_files/");
-    strncpy(file_name, f_name, 200);
-    strncat(path, file_name, 200);
+    strncpy(file_name, f_name, 400);
+    strncat(path, file_name, 400);
     strcat(path, "_rawcov.kml");
 
     FILE* kml_file = fopen(path, "w");
@@ -218,7 +218,7 @@ void savekml_test(char* f_name, folder_t* folder, int folder_quantity)
         fprintf(kml_file, placemark_template, 
             file_name,        folder[0].placemark_arr[j].measnumber, folder[0].placemark_arr[j].timestamp, 
             0.0, folder[0].placemark_arr[j].longitude,  folder[0].placemark_arr[j].latitude, 
-            folder[0].placemark_arr[j].altitude,    ((folder[0].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"),      ((folder[0].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"), 
+            0.0,    ((folder[0].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"),      ((folder[0].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"), 
             ((folder[0].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"),       folder[0].placemark_arr[j].timestamp,  "RAW coverage data", 
             0.0, folder[0].placemark_arr[j].latitude,   folder[0].placemark_arr[j].longitude);
     }
@@ -231,8 +231,8 @@ void savekml_test(char* f_name, folder_t* folder, int folder_quantity)
     printf("\nSaving averaging coverage kml-file\n");
 
     strcpy(path, "./Output_KML_files/");
-    strncpy(file_name, f_name, 200);
-    strncat(path, file_name, 200);
+    strncpy(file_name, f_name, 400);
+    strncat(path, file_name, 400);
     strcat(path, "_avgcov.kml");
 
     kml_file = fopen(path, "w");
@@ -253,7 +253,7 @@ void savekml_test(char* f_name, folder_t* folder, int folder_quantity)
         fprintf(kml_file, placemark_template, 
             file_name,        folder[1].placemark_arr[j].measnumber, folder[1].placemark_arr[j].timestamp, 
             0.0, folder[1].placemark_arr[j].longitude,  folder[1].placemark_arr[j].latitude, 
-            folder[1].placemark_arr[j].altitude,    ((folder[1].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"),      ((folder[1].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"), 
+            100.0,    ((folder[1].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"),      ((folder[1].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"), 
             ((folder[1].placemark_arr[j].coverfl) ? "AB00E660" : "AB000000"),       folder[1].placemark_arr[j].timestamp,  "RAW coverage data", 
             0.0, folder[1].placemark_arr[j].latitude,   folder[1].placemark_arr[j].longitude);
     }
