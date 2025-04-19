@@ -127,8 +127,10 @@ init_t initialization(void)
     FILE* instr = fopen("Иструкция.txt", "w");
     if(instr == NULL)
     {
-        printf("Ошибка открытия файла settings.ini\n");
+        printf("Ошибка сохранения файла Иструкция.txt\n");
             perror("Иструкция.txt");
+            clean_stdin();
+            getchar();
             exit(1);
     }
     fprintf(instr, instruction);
@@ -141,6 +143,8 @@ init_t initialization(void)
         if(set_file == NULL) {
             printf("Ошибка создания файла settings.ini\n");
             perror("settings.ini");
+            clean_stdin();
+            getchar();
             exit(1);
         }
         fprintf(set_file, init_string);
@@ -151,6 +155,8 @@ init_t initialization(void)
     {
         printf("Ошибка открытия файла settings.ini\n");
             perror("settings.ini");
+            clean_stdin();
+            getchar();
             exit(1);
     }
 
@@ -159,6 +165,7 @@ init_t initialization(void)
     if(test != 9)
     {
         printf("Ошибка чтения файла настроек settings.ini.\nИсправьте данные в файле или удалите его и перезапустите программу!\n");
+        clean_stdin();
         getchar();
         exit(1);
     }   

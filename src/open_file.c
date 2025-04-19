@@ -17,6 +17,8 @@ int openkml(char* f_name, folder_t* folder)
     {
         perror(file_name);
         printf("Or the file name is too long");
+        clean_stdin();
+        getchar();
         exit(1);
     }
     printf("\nAnalizing file structure..");
@@ -29,7 +31,7 @@ int openkml(char* f_name, folder_t* folder)
         char_max++;
         if(ch == '\n') str_max++;
     } 
-    printf("..ok\n%d symbols, %d strings\n", char_max, str_max);
+    printf("..ok\n%d symbols, %d lines\n", char_max, str_max);
 
     fseek(file_stream, 0, SEEK_SET);
     printf("Creating and marking memory..");
@@ -98,6 +100,8 @@ int opencsv(char* f_name, folder_t* folder)
     {
         perror(file_name);
         printf("Or the file name is too long");
+        clean_stdin();
+        getchar();
         exit(1);
     }
     /*-Counting the number of cells in a line and the number of lines in a file (checking for the same number of cells in each line)-*/
@@ -251,7 +255,6 @@ int opencsv(char* f_name, folder_t* folder)
         fgetc(file_stream); // reading \n at the end of a line
     }
 
-#if 1
 /*--------------CORRECTING FOLDER NAMES, adding short names (standart-provider)-----------------*/
     for(u32 i = 0; i < folder_quantity; i++)
     {
@@ -324,9 +327,9 @@ int opencsv(char* f_name, folder_t* folder)
             strcpy(folder[i].short_name, "UMTS_");
             strcat(folder[i].short_name, subname);
         }
-            #endif
-    }
 #endif
+    }
+
     fclose(file_stream);
 
     if(folder_quantity == 1)
